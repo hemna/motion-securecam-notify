@@ -30,9 +30,7 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
     print(msg.topic+" "+str(msg.payload))
     data = json.loads(msg.payload)
-    post_data = {'field1': data['temperature'],
-                 'field2': data['humidity']}
-    print(post_data)
+    print(data)
 
 client = mqtt.Client()
 client.on_connect = on_connect

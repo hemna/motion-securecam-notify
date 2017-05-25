@@ -13,8 +13,9 @@
 #
 
 import argparse
-import paho.mqtt.client as mqtt
 import json
+import os
+import paho.mqtt.client as mqtt
 
 CHANNEL="home/picam/bedroom"
 
@@ -47,10 +48,12 @@ client.on_publish = on_publish
 client.connect("192.168.1.44", 1883, 60)
 
 args = parser.parse_args()
+file = os.path.basename(os.path.normpath(args.file))
 data = {'file_name': args.file,
         'file_type': args.num,
         'image_type': args.image,
-        'movie_type': args.movie}
+        'movie_type': args.movie,
+        'url': "http://hemna.mynetgear.com/motion/%s" % file}
 event_json = json.dumps(data)
 print("publishing event %s" % event_json)
 client.publish(CHANNEL, event_json)
